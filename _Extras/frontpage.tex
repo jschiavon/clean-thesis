@@ -1,0 +1,70 @@
+%*******************************************************
+% Titlepage
+%*******************************************************
+\begin{titlepage}
+    \pdfbookmark[1]{\myTitle}{titlepage}
+    % if you want the titlepage to be centered, uncomment and fine-tune the line below (KOMA classes environment)
+    %    \begin{addmargin}[-1cm]{-3cm}
+
+    \begin{center}
+        \includegraphics[width=4cm]{LogoUNIPD_Red.png}
+    \end{center}
+
+    \vfill
+
+    \begin{center}
+        \large
+        \spacedlowsmallcaps{\myUni} \\
+        \medskip
+        \myDepartment \\
+        \bigskip
+        \emph{\myFaculty}
+    \end{center}
+
+    \vfill
+
+    \begin{center}
+        \color{UnipdRed}\Huge
+        \spacedallcaps{\myTitle}
+    \end{center}
+
+    \medskip
+
+    \begin{center}
+        \Large
+        \mySubtitle
+    \end{center}
+
+    \vfill
+
+    \begin{minipage}{0.4\textwidth}
+        \begin{flushleft}
+            \large
+            \swash{Supervisor:}\\
+            \myProf
+        \end{flushleft}
+    \end{minipage}\hfill
+    \begin{minipage}{0.45\textwidth}
+        \begin{flushright}
+            \large
+            \swash{Candidate:}\\
+            \myName
+        \end{flushright}
+    \end{minipage}
+
+
+    \vfill
+
+    \begin{center}
+        \large
+
+        \myDate
+    \end{center}
+
+
+    \vfill
+
+    %  \end{addmargin}
+\end{titlepage}
+
+

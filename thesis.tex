@@ -1,0 +1,60 @@
+\documentclass[twoside,openright,titlepage,fleqn,numbers=noenddot,%1headlines,
+        headinclude,footinclude,cleardoublepage=empty,abstract=on,
+        BCOR=5mm,paper=a4,fontsize=11pt
+        ]{scrreprt}
+
+
+\newcommand\inputfile[1]{%
+    \InputIfFileExists{#1}{}{\typeout{No file #1.}}%
+}
+
+
+%********************************************************************
+% Note: Make all your adjustments in here
+%*******************************************************
+\inputfile{config}
+
+
+
+\begin{document}
+    \renewcommand\thepage{\scshape\roman{page}}
+    \include{_Extras/frontpage}
+
+    \include{_Extras/second}
+
+    \include{_Extras/dedication}
+
+    \include{_Extras/thanks}
+
+    \gotoclearpage
+    \phantomsection\tableofcontents
+
+    \renewcommand\thepage{\arabic{page}}
+
+    \gotoclearpage
+    \include{_Chapters/00_introduction}
+
+
+    \gotoclearpage
+    \include{_Chapters/01_chaptername}
+
+    \gotoclearpage
+    \include{_Chapters/02_chaptername}
+
+    \gotoclearpage
+    \include{_Chapters/03_chaptername}
+
+
+    % INIZIO APPENDICI
+    \appendix
+    \gotoclearpage
+    \include{_Chapters/A_appendix}
+
+
+    % INIZIO MATERIALE CONCLUSIVO
+    \gotoclearpage
+    \include{_Extras/bibliography}
+
+
+\end{document}
+

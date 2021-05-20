@@ -1,0 +1,166 @@
+\usepackage{lipsum}
+
+% Languages
+\usepackage[english]{babel}
+\usepackage{csquotes}
+
+% Colors
+\usepackage[usenames,dvipsnames,table]{xcolor}
+\definecolor{UnipdRed}{RGB}{155,0,20}
+\definecolor{Trasparentino}{gray}{0.4}
+
+% Fonts
+\usepackage[no-math]{fontspec}
+\usepackage[OT1]{eulervm}
+\usepackage{microtype,ifthen}
+
+\defaultfontfeatures{%
+    RawFeature={%
+        +calt,   % *Contextual alternates
+        +clig,  % *contextual ligatures
+        +ccmp,  % *composition & decomposition
+        +tlig,  % 'tex-ligatures': `` '' -- --- !` ?` << >>
+        +cv06  % narrow guillemets
+    }%
+}
+\setmainfont{EB Garamond}
+\newfontface\chapterNumber[Scale=2.5,Color=Trasparentino,Numbers=Lining]{EBGaramond}
+\newfontfamily{\smallcaps}[RawFeature={+c2sc,+scmp}]{EB Garamond}
+\newfontfamily{\swash}[RawFeature={+swsh}]{EB Garamond}
+
+\RequirePackage{textcase} % for \MakeTextUppercase
+\makeatletter
+\newcommand{\ct@altfont}{}
+\newcommand{\ct@caps}{\ct@altfont\scshape}
+
+\DeclareRobustCommand{\spacedallcaps}[1]{{\addfontfeature{LetterSpace=18.0}\ct@caps\MakeTextUppercase{#1}}}
+\DeclareRobustCommand{\spacedlowsmallcaps}[1]{{\addfontfeatures{LetterSpace=14.0}\ct@caps\MakeTextLowercase{#1}}}
+\makeatother
+
+% Math stuff
+\usepackage{amsmath,amssymb,amsfonts,amsthm,braket,cancel}
+
+\newtheoremstyle{definition}{}{}{\itshape}{\parindent}{\scshape}{}{1em}{\thmname{#1}\thmnumber{ #2}:}
+\newtheoremstyle{theorem}{}{}{}{\parindent}{\scshape}{}{1em}{\thmname{#1}\thmnumber{ #2}:}
+\theoremstyle{theorem}
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{corollary}[lemma]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator{\logm}{Log}
+\DeclareMathOperator{\tr}{Tr}
+\newcommand{\norm}[2][]{\left\Vert#2\right\Vert_{#1}}
+
+% Layout, graphics and tables
+\usepackage{geometry}
+    \geometry{left=3.5cm, right=3.5cm, top=3.5cm, bottom=4cm, bindingoffset=0.5cm}
+\usepackage{graphicx}
+    \graphicspath{{_Images/}}
+\usepackage{booktabs,caption,subcaption}
+    \captionsetup{font=small,labelfont={sc},format=hang}
+
+\newcommand{\gotoclearpage}{\cleardoublepage}
+
+% Headers
+\usepackage[automark]{scrlayer-scrpage}
+\clearpairofpagestyles
+\makeatletter
+\let\MakeMarkcase\spacedlowsmallcaps
+\renewcommand{\chaptermark}[1]{\markboth{\spacedlowsmallcaps{#1}}{\spacedlowsmallcaps{#1}}}
+\renewcommand{\sectionmark}[1]{\markright{\textsc{\MakeTextLowercase{\thesection}}\hspace{1em} \spacedlowsmallcaps{#1}}}
+\lehead{\mbox{\llap{\small\thepage\kern1em\color{Trasparentino}\vline}\color{Trasparentino}\hspace{0.5em}\headmark\hfil}}
+\rohead{\mbox{\hfil{\color{Trasparentino}\headmark\hspace{0.5em}}\rlap{\small{\color{Trasparentino}\vline}\kern1em\thepage}}}
+\rofoot[\mbox{\makebox[0pt][l]{\kern1em\thepage}}]{}
+\renewcommand{\headfont}{\small}
+\renewcommand{\pnumfont}{\small}
+\clearscrplain
+\def\toc@heading{\chapter*{\contentsname}
+    \@mkboth{\spacedlowsmallcaps{\contentsname}}{\spacedlowsmallcaps{\contentsname}}}
+\makeatother
+
+
+% Chapters, sections and stuff
+\usepackage[clearempty,notocpart*]{titlesec}
+
+\newcommand\formatchapter[1]{%
+    \vbox to \ht\strutbox{%
+        \setbox0=\hbox{\chapterNumber\thechapter\hspace{10pt}\vline\ }%
+        \advance\hsize-\wd0 \advance\hsize-10pt\raggedright%
+        \spacedallcaps{#1}\vss}}
+
+\titleformat{\part}[block]{\normalfont\Huge}{Parte \thepart}{10pt}{\filcenter\scshape}
+\titleformat{\chapter}[block]%
+{\normalfont\Large}%
+{{\chapterNumber\thechapter}%
+    \ \,\hspace{10pt}\vline\ }{10pt}%
+{\formatchapter}
+\titleformat{\section}{\Large}{\scshape\thesection.}{1em}{\scshape}
+\titleformat{\subsection}{\large}{\scshape\thesubsection.}{0.5em}{\itshape}
+\titleformat{\subsubsection}{\large}{\quad\scshape\thesubsubsection}{0.5em}{\itshape}
+\titleformat{\paragraph}[runin]{\scshape}{}{}{}
+
+\renewcommand{\thesection}{\Roman{section}}
+\renewcommand{\thesubsection}{\thesection.\roman{subsection}}
+\renewcommand{\thesubsubsection}{\thesubsection.\roman{subsubsection}}
+\newcommand{\scref}[1]{\textsc{\ref{#1}}}
+
+% Table of contents
+\usepackage[titles, subfigure]{tocloft}
+\setcounter{tocdepth}{2}
+\renewcommand{\cftchapfont}{\scshape}
+\renewcommand{\cftchappagefont}{\normalfont}
+\renewcommand{\cftsecfont}{\scshape}
+\renewcommand{\cftsecpagefont}{\normalfont}
+\renewcommand{\cftsubsecfont}{\normalfont}
+\renewcommand{\cftsubsecpagefont}{\normalfont}
+
+\renewcommand{\cftchapleader}{\hspace{1.5em}}%
+\renewcommand{\cftchapafterpnum}{\cftparfillskip}
+\renewcommand{\cftsecleader}{\hspace{1.5em}}%
+\renewcommand{\cftsecafterpnum}{\cftparfillskip}
+\renewcommand{\cftsubsecleader}{\hspace{1.5em}}%
+\renewcommand{\cftsubsecafterpnum}{\cftparfillskip}%
+
+% Document data
+\newcommand{\myTitle}{Thesis title}
+\newcommand{\myShortTitle}{Thesis shortitle}
+\newcommand{\mySubtitle}{Thesis subtitle}
+\newcommand{\myName}{Author Name}
+\newcommand{\myDate}{2021}
+\newcommand{\myProf}{\emph{prof}. Supervisor name}
+\newcommand{\myFaculty}{Course name}
+\newcommand{\myDepartment}{Department name}
+\newcommand{\myUni}{Università degli Studi di Padova}
+\newcommand{\myLocation}{Padova}
+
+
+% Bibliography
+\usepackage[style=numeric-comp,
+                    backend=biber,
+                    backref=false,
+                    maxcitenames=3,
+                    hyperref=true,
+                    url=false,
+                    doi=false,
+                    isbn=false,
+                    date=year
+                    ]{biblatex}
+\addbibresource{biblio.bib}
+
+
+% Hyperref setup
+\usepackage{hyperref}
+\hypersetup{
+    pdftitle={\myTitle},    % title
+    pdfauthor={\myName},     % author
+    colorlinks=true,       % false: boxed links (set box color with linkbordercolor)
+    breaklinks,				% allow linebreaks on links
+    linkcolor=MidnightBlue,   % color of internal links
+    citecolor=TealBlue,       % color of links to bibliography
+    urlcolor=Sepia           % color of external links
+}
+\renewcommand\UrlFont{\rmfamily}
+
