@@ -10,3 +10,7 @@
 *.toc
 *.fls
 *.fdb_latexmk
+
+
+# pdf file
+*.pdf
