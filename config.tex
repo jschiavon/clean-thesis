@@ -7,23 +7,32 @@
 % Colors
 \usepackage[usenames,dvipsnames,table]{xcolor}
 \definecolor{UnipdRed}{RGB}{155,0,20}
-\definecolor{Trasparentino}{gray}{0.4}
+\definecolor{Trasparentino}{gray}{0.35}
 
 % Fonts
 \usepackage[no-math]{fontspec}
 \usepackage[OT1]{eulervm}
 \usepackage{microtype,ifthen}
 
-\defaultfontfeatures{%
-    RawFeature={%
+\directlua{
+  fonts.handlers.otf.addfeature{
+    name = "wxyz",
+    type = "alternate",
+    data = {
+      ["one.osf"] = "one.01",
+      ["one.tosf"] = "one.tosf01",
+    },
+  }
+}
+
+\setmainfont{EB Garamond}[Numbers={OldStyle,Proportional}, RawFeature={%
         +calt,   % *Contextual alternates
         +clig,  % *contextual ligatures
         +ccmp,  % *composition & decomposition
         +tlig,  % 'tex-ligatures': `` '' -- --- !` ?` << >>
-        +cv06  % narrow guillemets
-    }%
-}
-\setmainfont{EB Garamond}
+        +cv06,  % narrow guillemets
+        +wxyz % alternate 1
+    }]
 \newfontface\chapterNumber[Scale=2.5,Color=Trasparentino,Numbers=Lining]{EBGaramond}
 \newfontfamily{\smallcaps}[RawFeature={+c2sc,+scmp}]{EB Garamond}
 \newfontfamily{\swash}[RawFeature={+swsh}]{EB Garamond}
@@ -53,14 +62,25 @@
 \DeclareMathOperator{\logm}{Log}
 \DeclareMathOperator{\tr}{Tr}
 \newcommand{\norm}[2][]{\left\Vert#2\right\Vert_{#1}}
+\newcommand{\abs}[1]{\left\vert#1\right\vert}
+\newcommand{\spd}[1][]{\mathcal{S}_{#1}^+}
+\newcommand{\orth}[1][]{\mathcal{O}_{#1}}
+\newcommand{\real}[1][]{\mathbb{R}^{#1}}
+\newcommand{\transp}[1]{#1^\top}
+\newcommand{\inv}[1]{#1^{-1}}
 
 % Layout, graphics and tables
-\usepackage{geometry}
-    \geometry{left=3.5cm, right=3.5cm, top=3.5cm, bottom=4cm, bindingoffset=0.5cm}
+\usepackage[bottom=4.5cm]{geometry}
+%    \geometry{left=3.5cm, right=3.5cm, top=3.5cm, bottom=4cm, bindingoffset=0.5cm}
+\usepackage{setspace}
+    \onehalfspacing
+    \AfterTOCHead{\singlespacing}
 \usepackage{graphicx}
     \graphicspath{{_Images/}}
 \usepackage{booktabs,caption,subcaption}
-    \captionsetup{font=small,labelfont={sc},format=hang}
+\addtokomafont{caption}{\small}
+\setkomafont{captionlabel}{\scshape}
+\usepackage{pgfplots}
 
 \newcommand{\gotoclearpage}{\cleardoublepage}
 
@@ -81,48 +101,62 @@
     \@mkboth{\spacedlowsmallcaps{\contentsname}}{\spacedlowsmallcaps{\contentsname}}}
 \makeatother
 
+\cfoot[\pagemark]{}
+
 
 % Chapters, sections and stuff
-\usepackage[clearempty,notocpart*]{titlesec}
+\setkomafont{disposition}{\rmfamily\normalfont}
+\setkomafont{chapter}{\huge\scshape}
+\setkomafont{section}{\Large\scshape}
+\setkomafont{subsection}{\large\itshape}
 
-\newcommand\formatchapter[1]{%
-    \vbox to \ht\strutbox{%
-        \setbox0=\hbox{\chapterNumber\thechapter\hspace{10pt}\vline\ }%
-        \advance\hsize-\wd0 \advance\hsize-10pt\raggedright%
-        \spacedallcaps{#1}\vss}}
-
-\titleformat{\part}[block]{\normalfont\Huge}{Parte \thepart}{10pt}{\filcenter\scshape}
-\titleformat{\chapter}[block]%
-{\normalfont\Large}%
-{{\chapterNumber\thechapter}%
-    \ \,\hspace{10pt}\vline\ }{10pt}%
-{\formatchapter}
-\titleformat{\section}{\Large}{\scshape\thesection.}{1em}{\scshape}
-\titleformat{\subsection}{\large}{\scshape\thesubsection.}{0.5em}{\itshape}
-\titleformat{\subsubsection}{\large}{\quad\scshape\thesubsubsection}{0.5em}{\itshape}
-\titleformat{\paragraph}[runin]{\scshape}{}{}{}
-
-\renewcommand{\thesection}{\Roman{section}}
+\renewcommand*{\chapterformat}{\makebox[0pt][r]{\chapterNumber\thechapter\hspace{10pt}\vline\hspace{10pt}}}
+\renewcommand*{\sectionformat}{\textsc{\thesection\autodot}\enskip}
+\renewcommand*{\subsectionformat}{\textsc{\thesubsection\autodot}\enskip}
+\renewcommand{\thesection}{\textsc{\roman{section}}}
 \renewcommand{\thesubsection}{\thesection.\roman{subsection}}
 \renewcommand{\thesubsubsection}{\thesubsection.\roman{subsubsection}}
+
+\RedeclareSectionCommands[
+    tocraggedpagenumber,
+    toclinefill=\qquad
+    ]{part}
+
+\RedeclareSectionCommands[
+    tocraggedpagenumber,
+    toclinefill=\qquad,
+    afterindent=false,
+    beforeskip=5\baselineskip,
+    afterskip=3\baselineskip
+    ]{chapter}
+
+\RedeclareSectionCommands[
+    tocraggedpagenumber,
+    toclinefill=\qquad,
+    afterindent=false,
+    beforeskip=2\baselineskip,
+    afterskip=\baselineskip
+    ]{section}
+    
+\RedeclareSectionCommands[
+    tocraggedpagenumber,
+    toclinefill=\qquad,
+    afterindent=false,
+    beforeskip=1.5\baselineskip,
+    afterskip=0.75\baselineskip
+    ]{subsection}
+    
+\RedeclareSectionCommands[
+    tocraggedpagenumber,
+    toclinefill=\qquad
+    ]{subsubsection}
+
 \newcommand{\scref}[1]{\textsc{\ref{#1}}}
+\newcommand{\figref}[1]{Figure~\scref{#1}}
 
 % Table of contents
-\usepackage[titles, subfigure]{tocloft}
-\setcounter{tocdepth}{1}
-\renewcommand{\cftchapfont}{\scshape}
-\renewcommand{\cftchappagefont}{\normalfont}
-\renewcommand{\cftsecfont}{\scshape}
-\renewcommand{\cftsecpagefont}{\normalfont}
-\renewcommand{\cftsubsecfont}{\normalfont}
-\renewcommand{\cftsubsecpagefont}{\normalfont}
-
-\renewcommand{\cftchapleader}{\hspace{1.5em}}%
-\renewcommand{\cftchapafterpnum}{\cftparfillskip}
-\renewcommand{\cftsecleader}{\hspace{1.5em}}%
-\renewcommand{\cftsecafterpnum}{\cftparfillskip}
-\renewcommand{\cftsubsecleader}{\hspace{1.5em}}%
-\renewcommand{\cftsubsecafterpnum}{\cftparfillskip}%
+\setkomafont{chapterentry}{\scshape}
+\setcounter{tocdepth}{\sectiontocdepth}
 
 % Document data
 \newcommand{\myTitle}{Thesis title}
