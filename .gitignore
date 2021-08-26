@@ -8,6 +8,8 @@
 *.run.xml
 *.synctex.gz
 *.toc
+*.lof
+*.lot
 *.fls
 *.fdb_latexmk
 

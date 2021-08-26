@@ -5,6 +5,7 @@
         abstract=on,
         captions=centeredbeside,
         toc=bibliography,
+        toc=listof,
         BCOR=8mm,
         DIV=calc,
         paper=a4,
@@ -29,14 +30,19 @@
     \include{_Extras/frontpage}
 
     \include{_Extras/second}
-
+    
+    \gotoclearpage
+    \include{_Extras/abstract}
+    
+    \gotoclearpage
     \include{_Extras/dedication}
 
+    \gotoclearpage
     \include{_Extras/thanks}
 
     \gotoclearpage
-    \phantomsection\tableofcontents
-
+    \include{_Extras/contents}
+    
     \renewcommand\thepage{\arabic{page}}
 
     \gotoclearpage
