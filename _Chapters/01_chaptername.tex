@@ -1,11 +1,39 @@
 \chapter{First chapter}
+Here is a reference to \cref{ch:second}. And here is a reference to \cref{sec:one-one} and then at \cref{sub:one-one-one}. And finally a reference to \cref{sec:two-one}.
 
-\lipsum[1-4]
+Moreover, we can reference also \cref{thm:important} or \cref{eq:difficultmath} or even \crefrange{thm:important}{thm:corollary} or \cref{thm:important,thm:small,def:first}. \Cref{eq:difficultmath} appears at the beginning of a sentence, while we can add that \cref{sec:two-one} is at \cpageref{sec:two-one}.
 
-\section{First section}
-\lipsum[5-6]
+\lipsum[1-3]
 
-\subsection{Subsection 1}
+\section{First section}\label{sec:one-one}
+Here is some difficult math
+\begin{equation}\label{eq:difficultmath}
+    e^{i\pi} = - 1,
+\end{equation}
+while here some inline math as well $\sin^2(x) + \cos^2(x) = 1$.
+
+Moreover, here follows some example of theorems and other maths environments.
+\begin{theorem}\label{thm:important}
+    If something is boring and long, a computer can do it better than you.
+\end{theorem}
+\begin{proof}
+    It is left for exercise.
+\end{proof}
+
+\begin{lemma}\label{thm:small}
+    This is a small lemma instead.
+\end{lemma}
+\begin{corollary}\label{thm:corollary}
+    And this a corollary
+\end{corollary}
+\begin{definition}\label{def:first}
+    We define \emph{half} a number to be that number than, when doubled, returns the original number:
+    \begin{equation}
+        a = \frac{x}{2} \quad \text{iff} \quad 2a = x.
+    \end{equation}
+\end{definition}
+
+\subsection{Subsection 1}\label{sub:one-one-one}
 \lipsum[7-8]
 
 \section{Second section}

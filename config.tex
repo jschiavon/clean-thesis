@@ -35,27 +35,29 @@
     }]
 \newfontface\chapterNumber[Scale=2.5,Color=Trasparentino,Numbers=Lining]{EBGaramond}
 \newfontfamily{\smallcaps}[RawFeature={+c2sc,+scmp}]{EB Garamond}
-\newfontfamily{\swash}[RawFeature={+swsh}]{EB Garamond}
 
 \RequirePackage{textcase} % for \MakeTextUppercase
 \makeatletter
 \newcommand{\ct@altfont}{}
 \newcommand{\ct@caps}{\ct@altfont\scshape}
 
-\DeclareRobustCommand{\spacedallcaps}[1]{{\addfontfeature{LetterSpace=18.0}\ct@caps\MakeTextUppercase{#1}}}
-\DeclareRobustCommand{\spacedlowsmallcaps}[1]{{\addfontfeatures{LetterSpace=14.0}\ct@caps\MakeTextLowercase{#1}}}
+\DeclareRobustCommand{\spacedallcaps}[1]{{\addfontfeature{LetterSpace=14.0}\ct@caps\MakeTextUppercase{#1}}}
+\DeclareRobustCommand{\spacedlowsmallcaps}[1]{{\addfontfeatures{LetterSpace=10.0}\ct@caps\MakeTextLowercase{#1}}}
+\DeclareRobustCommand{\swash}[1]{{\addfontfeature{RawFeature={+swsh}}\textit{#1}}}
+\DeclareRobustCommand{\alternatenumberstyle}[1]{{\addfontfeature{RawFeature={+wxyz}}#1}}
 \makeatother
 
 % Math stuff
 \usepackage{amsmath,amssymb,amsfonts,amsthm,braket,cancel}
 
-\newtheoremstyle{definition}{}{}{\itshape}{\parindent}{\scshape}{}{1em}{\thmname{#1}\thmnumber{ #2}:}
-\newtheoremstyle{theorem}{}{}{}{\parindent}{\scshape}{}{1em}{\thmname{#1}\thmnumber{ #2}:}
+\newtheoremstyle{definition}{}{}{\itshape}{\parindent}{\scshape}{}{1em}{\thmname{#1}\thmnumber{ \alternatenumberstyle{#2}}:}
+\newtheoremstyle{theorem}{}{}{}{\parindent}{\scshape}{}{1em}{\thmname{#1}\thmnumber{ \alternatenumberstyle{#2}}:}
 \theoremstyle{theorem}
-\newtheorem{lemma}{Lemma}[section]
-\newtheorem{corollary}[lemma]{Corollary}
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
 \theoremstyle{definition}
-\newtheorem{definition}{Definition}[section]
+\newtheorem{definition}{Definition}[chapter]
 
 \DeclareMathOperator*{\argmin}{argmin}
 \DeclareMathOperator*{\argmax}{argmax}
@@ -113,9 +115,16 @@
 \renewcommand*{\chapterformat}{\makebox[0pt][r]{\chapterNumber\thechapter\hspace{10pt}\vline\hspace{10pt}}}
 \renewcommand*{\sectionformat}{\textsc{\thesection\autodot}\enskip}
 \renewcommand*{\subsectionformat}{\textsc{\thesubsection\autodot}\enskip}
+\renewcommand*{\thechapter}{\alternatenumberstyle{\arabic{chapter}}}
 \renewcommand{\thesection}{\textsc{\roman{section}}}
 \renewcommand{\thesubsection}{\thesection.\roman{subsection}}
 \renewcommand{\thesubsubsection}{\thesubsection.\roman{subsubsection}}
+
+\makeatletter
+\renewcommand*{\p@section}{\thechapter.}
+\renewcommand*{\p@subsection}{\thechapter.}
+\renewcommand*{\p@subsubsection}{\thechapter.}
+\makeatother
 
 \RedeclareSectionCommands[
     tocraggedpagenumber,
@@ -197,4 +206,7 @@
     urlcolor=Sepia           % color of external links
 }
 \renewcommand\UrlFont{\rmfamily}
+
+\usepackage[english]{cleveref}
+\newcommand{\crefrangeconjunction}{ -- }
 
