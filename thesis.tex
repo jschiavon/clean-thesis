@@ -26,12 +26,14 @@
 
 
 \begin{document}
-    \renewcommand\thepage{\scshape\roman{page}}
+    \pagestyle{empty}
     \include{_Extras/frontpage}
 
     \include{_Extras/second}
     
     \gotoclearpage
+    \frontmatter
+    \renewcommand\thepage{\scshape\roman{page}}
     \include{_Extras/abstract}
     
     \gotoclearpage
@@ -43,8 +45,8 @@
     \gotoclearpage
     \include{_Extras/contents}
     
+    \mainmatter
     \renewcommand\thepage{\arabic{page}}
-
     \gotoclearpage
     \include{_Chapters/00_introduction}
 
