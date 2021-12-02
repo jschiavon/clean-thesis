@@ -86,52 +86,11 @@
         ]{defstyle}
     \declaretheorem[style=thmstyle]{theorem}
     \declaretheorem[style=thmstyle,sibling=theorem]{lemma}
+    \declaretheorem[style=thmstyle,sibling=theorem]{corollary}
     \declaretheorem[style=defstyle]{definition}
     \declaretheorem[style=defstyle]{remark}
     \declaretheorem[style=defstyle,sibling=remark]{example}
 
-    \DeclareMathOperator*{\argmin}{argmin}
-    \DeclareMathOperator*{\argmax}{argmax}
-    \DeclareMathOperator{\logm}{Log}
-    \DeclareMathOperator{\expm}{Exp}
-    \DeclareMathOperator{\tr}{Tr}
-    \DeclareMathOperator{\grad}{Grad}
-    \DeclareMathOperator{\hess}{Hess}
-    \DeclareMathOperator{\diag}{diag}
-
-    \newcommand{\norm}[2][]{\left\Vert#2\right\Vert_{#1}}
-    \newcommand{\abs}[1]{\left\vert#1\right\vert}
-    \newcommand{\inner}[3][]{\left\langle#2,#3\right\rangle_{#1}}
-
-    \newcommand{\spd}[1][]{\symcal{S}_{#1}^+}
-    \newcommand{\orth}[1][]{\symbb{O}_{#1}}
-    \newcommand{\real}[1][]{\symbb{R}^{#1}}
-    \newcommand{\manif}{\symcal{M}}
-    \newcommand{\eval}[1]{\symbb{E}\left[#1\right]}
-    \newcommand{\var}[1]{\mathrm{Var}\left[#1\right]}
-    \newcommand{\He}{\symsf{H}}
-    \newcommand{\Id}{\symbb{I}}
-
-    \makeatletter
-        \newcommand*{\transpose}{%
-            {\mathpalette\@transpose{}}%
-        }
-        \newcommand*{\@transpose}[2]{%
-            % #1: math style
-            % #2: unused
-            \raisebox{\depth}{$\m@th#1\intercal$}%
-        }
-    \makeatother
-    \newcommand{\trsp}[1]{#1^\transpose}
-    \newcommand{\inv}[1]{#1^{-1}}
-    \newcommand{\Msqrt}[1]{#1^{\sfrac{1}{2}}}
-    \newcommand{\iMsqrt}[1]{#1^{-\sfrac{1}{2}}}
-    \newcommand{\dd}[1]{\mathrm{d}#1}
-
-    \newcommand{\tSigma}{\Sigma^\star}
-    \newcommand{\reference}{reference matrix}
-    \newcommand{\refmat}[1]{\tilde{#1}}
-    \newcommand{\diagposentr}{\mathcal{D}^+}
 
 % Algorithms
     \algrenewcommand\algorithmicrequire{\textbf{Input}}
@@ -184,7 +143,7 @@
 
     \graphicspath{{_Images/}}
     \usetikzlibrary{3d,calc}
-    \input{tikz_utils}
+    %\input{tikz_utils}
 
     \addtokomafont{caption}{\small}
     \setkomafont{captionlabel}{\scshape}
@@ -231,7 +190,23 @@
     \renewcommand*{\p@subsubsection}{\thechapter.}
     \makeatother
 
-    
+    \newcommand{\cvname}[2]{%
+        \begin{center}
+            {\huge #1 \textsc{#2}}\\
+
+            \medskip
+            {\Large \scshape Curriculum Vitae}
+        \end{center}
+        \vspace*{2\baselineskip}
+    }
+
+    \newcommand{\cvsection}[1]{%
+        \vspace{\baselineskip}
+        \begin{flushright}
+            \large \scshape #1
+            \noindent\rule[0.5ex]{\linewidth}{1pt}
+        \end{flushright}
+    }
 
     \RedeclareSectionCommands[
         tocraggedpagenumber,
