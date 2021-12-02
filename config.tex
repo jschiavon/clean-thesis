@@ -1,212 +1,341 @@
-\usepackage{lipsum}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%             PACKAGE LOADING
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Utils
+    \usepackage{lipsum}
+    \usepackage{etoolbox}
+    \usepackage{comment}
+    \usepackage{xpatch}
 
 % Languages
-\usepackage[english]{babel}
-\usepackage{csquotes}
+    \usepackage[english]{babel}
+    \usepackage{csquotes}
 
 % Colors
-\usepackage[usenames,dvipsnames,table]{xcolor}
-\definecolor{UnipdRed}{RGB}{155,0,20}
-\definecolor{Trasparentino}{gray}{0.35}
+    \usepackage[usenames,dvipsnames,table]{xcolor}
 
 % Fonts
-\usepackage[no-math]{fontspec}
-\usepackage[OT1]{eulervm}
-\usepackage{microtype,ifthen}
+    \usepackage[no-math]{fontspec}
 
-\directlua{
-  fonts.handlers.otf.addfeature{
-    name = "wxyz",
-    type = "alternate",
-    data = {
-      ["one.osf"] = "one.01",
-      ["one.tosf"] = "one.tosf01",
-    },
-  }
-}
+% Math and Algorithms
+    \usepackage{amsmath,amssymb,amsfonts,amsthm}
+    \usepackage{braket,cancel}
+    \usepackage{xfrac,thmtools}
+    \usepackage{siunitx}
+    \usepackage[math-style=upright,bold-style=upright]{unicode-math-luatex}
 
-\setmainfont{EB Garamond}[Numbers={OldStyle,Proportional}, RawFeature={%
-        +calt,   % *Contextual alternates
-        +clig,  % *contextual ligatures
-        +ccmp,  % *composition & decomposition
-        +tlig,  % 'tex-ligatures': `` '' -- --- !` ?` << >>
-        +cv06,  % narrow guillemets
-        +wxyz % alternate 1
-    }]
-\newfontface\chapterNumber[Scale=2.5,Color=Trasparentino,Numbers=Lining]{EBGaramond}
-\newfontfamily{\smallcaps}[RawFeature={+c2sc,+scmp}]{EB Garamond}
-
-\RequirePackage{textcase} % for \MakeTextUppercase
-\makeatletter
-\newcommand{\ct@altfont}{}
-\newcommand{\ct@caps}{\ct@altfont\scshape}
-
-\DeclareRobustCommand{\spacedallcaps}[1]{{\addfontfeature{LetterSpace=14.0}\ct@caps\MakeTextUppercase{#1}}}
-\DeclareRobustCommand{\spacedlowsmallcaps}[1]{{\addfontfeatures{LetterSpace=10.0}\ct@caps\MakeTextLowercase{#1}}}
-\DeclareRobustCommand{\swash}[1]{{\addfontfeature{RawFeature={+swsh}}\textit{#1}}}
-\DeclareRobustCommand{\alternatenumberstyle}[1]{{\addfontfeature{RawFeature={+wxyz}}#1}}
-\makeatother
-
-% Math stuff
-\usepackage{amsmath,amssymb,amsfonts,amsthm,braket,cancel}
-
-\newtheoremstyle{definition}{}{}{\itshape}{\parindent}{\scshape}{}{1em}{\thmname{#1}\thmnumber{ \alternatenumberstyle{#2}}:}
-\newtheoremstyle{theorem}{}{}{}{\parindent}{\scshape}{}{1em}{\thmname{#1}\thmnumber{ \alternatenumberstyle{#2}}:}
-\theoremstyle{theorem}
-\newtheorem{theorem}{Theorem}[chapter]
-\newtheorem{lemma}[theorem]{Lemma}
-\newtheorem{corollary}[theorem]{Corollary}
-\theoremstyle{definition}
-\newtheorem{definition}{Definition}[chapter]
-
-\DeclareMathOperator*{\argmin}{argmin}
-\DeclareMathOperator*{\argmax}{argmax}
-\DeclareMathOperator{\logm}{Log}
-\DeclareMathOperator{\tr}{Tr}
-\newcommand{\norm}[2][]{\left\Vert#2\right\Vert_{#1}}
-\newcommand{\abs}[1]{\left\vert#1\right\vert}
-\newcommand{\spd}[1][]{\mathcal{S}_{#1}^+}
-\newcommand{\orth}[1][]{\mathcal{O}_{#1}}
-\newcommand{\real}[1][]{\mathbb{R}^{#1}}
-\newcommand{\transp}[1]{#1^\top}
-\newcommand{\inv}[1]{#1^{-1}}
+    \usepackage[spaceRequire=false]{algpseudocodex}
 
 % Layout, graphics and tables
-\usepackage[bottom=4.5cm]{geometry}
-%    \geometry{left=3.5cm, right=3.5cm, top=3.5cm, bottom=4cm, bindingoffset=0.5cm}
-\usepackage{setspace}
-    \onehalfspacing
-    \AfterTOCHead{\singlespacing}
-\usepackage{graphicx}
-    \graphicspath{{_Images/}}
-\usepackage{booktabs,caption,subcaption}
-\addtokomafont{caption}{\small}
-\setkomafont{captionlabel}{\scshape}
-\usepackage{pgfplots}
-
-\newcommand{\gotoclearpage}{\cleardoublepage}
+    \usepackage[bottom=4.5cm]{geometry}
+    \usepackage{setspace}
+    \usepackage{graphicx}
+    \usepackage{booktabs,caption,subcaption,multirow}
+    \usepackage{tikz}
 
 % Headers
-\usepackage[automark]{scrlayer-scrpage}
-\clearpairofpagestyles
-\makeatletter
-\let\MakeMarkcase\spacedlowsmallcaps
-\renewcommand{\chaptermark}[1]{\markboth{\spacedlowsmallcaps{#1}}{\spacedlowsmallcaps{#1}}}
-\renewcommand{\sectionmark}[1]{\markright{\textsc{\MakeTextLowercase{\thesection}}\hspace{1em} \spacedlowsmallcaps{#1}}}
-\lehead{\mbox{\llap{\small\thepage\kern1em\color{Trasparentino}\vline}\color{Trasparentino}\hspace{0.5em}\headmark\hfil}}
-\rohead{\mbox{\hfil{\color{Trasparentino}\headmark\hspace{0.5em}}\rlap{\small{\color{Trasparentino}\vline}\kern1em\thepage}}}
-\rofoot[\mbox{\makebox[0pt][l]{\kern1em\thepage}}]{}
-\renewcommand{\headfont}{\small}
-\renewcommand{\pnumfont}{\small}
-\clearscrplain
-\def\toc@heading{\chapter*{\contentsname}
-    \@mkboth{\spacedlowsmallcaps{\contentsname}}{\spacedlowsmallcaps{\contentsname}}}
-\makeatother
+    \usepackage[automark]{scrlayer-scrpage}
 
-\cfoot[\pagemark]{}
+% Bibliography
+    \usepackage[
+        style=authoryear-comp,
+        dashed=false,
+        backend=biber,
+%        backref=true,
+        maxcitenames=2,
+        maxbibnames=4,
+        hyperref=true,
+        uniquename=false,
+        uniquelist=false,
+        url=false,
+        doi=false,
+        isbn=false,
+        date=year
+    ]{biblatex}
 
+% Acronyms
+   \usepackage[printonlyused,smaller]{acronym}
 
-% Chapters, sections and stuff
-\setkomafont{disposition}{\rmfamily\normalfont}
-\setkomafont{chapter}{\huge\scshape}
-\setkomafont{section}{\Large\scshape}
-\setkomafont{subsection}{\large\itshape}
+% References
+    \usepackage{hyperref}
+    \usepackage[english,noabbrev]{cleveref}
 
-\renewcommand*{\chapterformat}{\makebox[0pt][r]{\chapterNumber\thechapter\hspace{10pt}\vline\hspace{10pt}}}
-\renewcommand*{\sectionformat}{\textsc{\thesection\autodot}\enskip}
-\renewcommand*{\subsectionformat}{\textsc{\thesubsection\autodot}\enskip}
-\renewcommand*{\thechapter}{\alternatenumberstyle{\arabic{chapter}}}
-\renewcommand{\thesection}{\textsc{\roman{section}}}
-\renewcommand{\thesubsection}{\thesection.\roman{subsection}}
-\renewcommand{\thesubsubsection}{\thesubsection.\roman{subsubsection}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%             MACRO DEFINITIONS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\makeatletter
-\renewcommand*{\p@section}{\thechapter.}
-\renewcommand*{\p@subsection}{\thechapter.}
-\renewcommand*{\p@subsubsection}{\thechapter.}
-\makeatother
+% Hypenation
+    \babelhyphenation[english]{foun-ded}
 
-\RedeclareSectionCommands[
-    tocraggedpagenumber,
-    toclinefill=\qquad
-    ]{part}
+% Colors
+    \definecolor{UnipdRed}{RGB}{155,0,20}
+    \definecolor{Trasparentino}{gray}{0.35}
 
-\RedeclareSectionCommands[
-    tocraggedpagenumber,
-    toclinefill=\qquad,
-    afterindent=false,
-    beforeskip=5\baselineskip,
-    afterskip=3\baselineskip
-    ]{chapter}
+% Math stuff
+    \declaretheoremstyle[%
+        headfont=\scshape, within=chapter,
+        headpunct={\medskip}, postheadspace=\newline, notefont=\normalsize, %notebraces = {\;}{},
+        spaceabove = 8pt, spacebelow = 8pt
+        ]{thmstyle}
+    \declaretheoremstyle[%
+        headfont=\scshape, within=chapter, bodyfont=\itshape,
+        headpunct={:}, postheadspace=8pt, notefont=\normalsize,
+        spaceabove =8pt, spacebelow =8pt
+        ]{defstyle}
+    \declaretheorem[style=thmstyle]{theorem}
+    \declaretheorem[style=thmstyle,sibling=theorem]{lemma}
+    \declaretheorem[style=defstyle]{definition}
+    \declaretheorem[style=defstyle]{remark}
+    \declaretheorem[style=defstyle,sibling=remark]{example}
 
-\RedeclareSectionCommands[
-    tocraggedpagenumber,
-    toclinefill=\qquad,
-    afterindent=false,
-    beforeskip=2\baselineskip,
-    afterskip=\baselineskip
-    ]{section}
-    
-\RedeclareSectionCommands[
-    tocraggedpagenumber,
-    toclinefill=\qquad,
-    afterindent=false,
-    beforeskip=1.5\baselineskip,
-    afterskip=0.75\baselineskip
-    ]{subsection}
-    
-\RedeclareSectionCommands[
-    tocraggedpagenumber,
-    toclinefill=\qquad
-    ]{subsubsection}
+    \DeclareMathOperator*{\argmin}{argmin}
+    \DeclareMathOperator*{\argmax}{argmax}
+    \DeclareMathOperator{\logm}{Log}
+    \DeclareMathOperator{\expm}{Exp}
+    \DeclareMathOperator{\tr}{Tr}
+    \DeclareMathOperator{\grad}{Grad}
+    \DeclareMathOperator{\hess}{Hess}
+    \DeclareMathOperator{\diag}{diag}
 
-\newcommand{\scref}[1]{\textsc{\ref{#1}}}
-\newcommand{\figref}[1]{Figure~\scref{#1}}
+    \newcommand{\norm}[2][]{\left\Vert#2\right\Vert_{#1}}
+    \newcommand{\abs}[1]{\left\vert#1\right\vert}
+    \newcommand{\inner}[3][]{\left\langle#2,#3\right\rangle_{#1}}
 
-% Table of contents
-\setkomafont{chapterentry}{\scshape}
-\setcounter{tocdepth}{\sectiontocdepth}
+    \newcommand{\spd}[1][]{\symcal{S}_{#1}^+}
+    \newcommand{\orth}[1][]{\symbb{O}_{#1}}
+    \newcommand{\real}[1][]{\symbb{R}^{#1}}
+    \newcommand{\manif}{\symcal{M}}
+    \newcommand{\eval}[1]{\symbb{E}\left[#1\right]}
+    \newcommand{\var}[1]{\mathrm{Var}\left[#1\right]}
+    \newcommand{\He}{\symsf{H}}
+    \newcommand{\Id}{\symbb{I}}
+
+    \makeatletter
+        \newcommand*{\transpose}{%
+            {\mathpalette\@transpose{}}%
+        }
+        \newcommand*{\@transpose}[2]{%
+            % #1: math style
+            % #2: unused
+            \raisebox{\depth}{$\m@th#1\intercal$}%
+        }
+    \makeatother
+    \newcommand{\trsp}[1]{#1^\transpose}
+    \newcommand{\inv}[1]{#1^{-1}}
+    \newcommand{\Msqrt}[1]{#1^{\sfrac{1}{2}}}
+    \newcommand{\iMsqrt}[1]{#1^{-\sfrac{1}{2}}}
+    \newcommand{\dd}[1]{\mathrm{d}#1}
+
+    \newcommand{\tSigma}{\Sigma^\star}
+    \newcommand{\reference}{reference matrix}
+    \newcommand{\refmat}[1]{\tilde{#1}}
+    \newcommand{\diagposentr}{\mathcal{D}^+}
+
+% Algorithms
+    \algrenewcommand\algorithmicrequire{\textbf{Input}}
+
+    \algnewcommand\algorithmicbreak{\textbf{break}}
+    \algnewcommand\Break{\algorithmicbreak }
 
 % Document data
-\newcommand{\myTitle}{Thesis title}
-\newcommand{\myShortTitle}{Thesis shortitle}
-\newcommand{\mySubtitle}{Thesis subtitle}
-\newcommand{\myName}{Author Name}
-\newcommand{\myDate}{2021}
-\newcommand{\myProf}{\emph{prof}. Supervisor name}
-\newcommand{\myFaculty}{Course name}
-\newcommand{\myDepartment}{Department name}
-\newcommand{\myUni}{Università degli Studi di Padova}
-\newcommand{\myLocation}{Padova}
+    \newcommand{\myTitle}{Thesis title}
+    \newcommand{\myShortTitle}{Thesis shortitle}
+    \newcommand{\mySubtitle}{Thesis subtitle}
+    \newcommand{\myName}{Author Name}
+    \newcommand{\myDate}{2021}
+    \newcommand{\myProf}{\emph{prof}. Supervisor name}
+    \newcommand{\myFaculty}{Course name}
+    \newcommand{\myDepartment}{Department name}
+    \newcommand{\myUni}{Università degli Studi di Padova}
+    \newcommand{\myLocation}{Padova}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%             PACKAGE CONFIGURATIONS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Fonts
+    \setmainfont{TeX Gyre Pagella}[
+        Numbers=OldStyle,
+        Ligatures={Common,Rare,TeX}
+    ]
+    \newfontface\chapterNumber[Scale=2.5,Color=Trasparentino,Numbers=Lining]{TeX Gyre Pagella}
+
+    \RequirePackage{textcase} % for \MakeTextUppercase
+    \makeatletter
+        \newcommand{\ct@altfont}{}
+        \newcommand{\ct@caps}{\ct@altfont\scshape}
+
+        \DeclareRobustCommand{\spacedallcaps}[1]{{\addfontfeature{LetterSpace=14.0}\ct@caps\MakeTextUppercase{#1}}}
+        \DeclareRobustCommand{\spacedlowsmallcaps}[1]{{\addfontfeatures{LetterSpace=10.0}\ct@caps\MakeTextLowercase{#1}}}
+        \DeclareRobustCommand{\swash}[1]{{\addfontfeature{Style=Swash}\textit{#1}}}
+        \DeclareRobustCommand{\heading}[1]{{\addfontfeature{Letters=SmallCaps}#1}}
+        \DeclareRobustCommand{\alternatenumberstyle}[1]{{\addfontfeature{Numbers=Lining}#1}}
+    \makeatother
+
+    \setmathfont{TeX Gyre Pagella Math}
+    \setmathfont{STIX Two Math}[range={cal,bb}]
+    \renewcommand{\vec}[1]{\symbf{#1}}
+
+% Layout, graphics and tables
+    \onehalfspacing
+    \AfterTOCHead{\singlespacing}
+
+    \graphicspath{{_Images/}}
+    \usetikzlibrary{3d,calc}
+    \input{tikz_utils}
+
+    \addtokomafont{caption}{\small}
+    \setkomafont{captionlabel}{\scshape}
+
+    \newcommand{\gotoclearpage}{\cleardoublepage\acresetall}
+
+% Headers
+    \clearpairofpagestyles
+    \makeatletter
+    \let\MakeMarkcase\spacedlowsmallcaps
+    \renewcommand{\chaptermark}[1]{\markboth{\spacedlowsmallcaps{#1}}{\spacedlowsmallcaps{#1}}}
+    \renewcommand{\sectionmark}[1]{\markright{\textsc{\MakeTextLowercase{\thesection}}\hspace{1em} \spacedlowsmallcaps{#1}}}
+    \lehead{\mbox{\llap{\small\thepage\kern1em\color{Trasparentino}\vline}\color{Trasparentino}\hspace{0.5em}\headmark\hfil}}
+    \rohead{\mbox{\hfil{\color{Trasparentino}\headmark\hspace{0.5em}}\rlap{\small{\color{Trasparentino}\vline}\kern1em\thepage}}}
+    \rofoot[\mbox{\makebox[0pt][l]{\kern1em\thepage}}]{}
+    \renewcommand{\headfont}{\small}
+    \renewcommand{\pnumfont}{\small}
+    \clearplainofpairofpagestyles
+    \def\toc@heading{\chapter*{\contentsname}
+        \@mkboth{\spacedlowsmallcaps{\contentsname}}{\spacedlowsmallcaps{\contentsname}}}
+    \makeatother
+
+    \cfoot[\pagemark]{}
+
+% Chapters, sections and stuff
+    \renewcommand{\descriptionlabel}[1]{\hspace\labelsep\normalfont\scshape#1}
+    \setkomafont{disposition}{\rmfamily\normalfont}
+    \setkomafont{chapter}{\huge\scshape}
+    \setkomafont{section}{\Large\scshape}
+    \setkomafont{subsection}{\large\itshape}
+    \setkomafont{paragraph}{\scshape}
+
+    \renewcommand*{\chapterformat}{\makebox[0pt][r]{\chapterNumber\thechapter\hspace{10pt}\vline\hspace{10pt}}}
+    \renewcommand*{\sectionformat}{\textsc{\thesection\autodot}\enskip}
+    \renewcommand*{\subsectionformat}{\textsc{\thesubsection\autodot}\enskip}
+    \renewcommand*{\thechapter}{\arabic{chapter}}
+    \renewcommand{\thesection}{\textsc{\roman{section}}}
+    \renewcommand{\thesubsection}{\thesection.\textsc{\roman{subsection}}}
+    \renewcommand{\thesubsubsection}{\thesubsection.\roman{subsubsection}}
+
+    \makeatletter
+    \renewcommand*{\p@section}{\thechapter.}
+    \renewcommand*{\p@subsection}{\thechapter.}
+    \renewcommand*{\p@subsubsection}{\thechapter.}
+    \makeatother
+
+    
+
+    \RedeclareSectionCommands[
+        tocraggedpagenumber,
+        toclinefill=\qquad
+        ]{part}
+
+    \RedeclareSectionCommands[
+        tocraggedpagenumber,
+        toclinefill=\qquad,
+        afterindent=false,
+        beforeskip=3.5\baselineskip,
+        afterskip=2\baselineskip
+        ]{chapter}
+
+    \RedeclareSectionCommands[
+        tocraggedpagenumber,
+        toclinefill=\qquad,
+        afterindent=false,
+        beforeskip=1.5\baselineskip,
+        afterskip=\baselineskip
+        ]{section}
+
+    \RedeclareSectionCommands[
+        tocraggedpagenumber,
+        toclinefill=\qquad,
+        afterindent=false,
+        beforeskip=\baselineskip,
+        afterskip=0.75\baselineskip
+        ]{subsection}
+
+    \RedeclareSectionCommands[
+        tocraggedpagenumber,
+        toclinefill=\qquad
+        ]{subsubsection}
+
+    \DeclareNewTOC[
+        type=algorithm,
+        float,
+        floatpos=h,
+        name=Algorithm,
+        listname={List of Algorithms},
+        counterwithin=chapter,
+        atbegin={%
+            \KOMAoptions{captions=heading}
+            \xpretocmd\algorithmic
+            {\noindent\rule[\ht\strutbox]{\linewidth}{.8pt}\vspace{-0.8\baselineskip}}
+            {}{\PatchFailed}%
+            \xapptocmd\endalgorithmic
+            {\noindent\rule[\ht\strutbox]{\linewidth}{1pt}\vspace{-0.8\baselineskip}}
+            {}{\PatchFailed}%
+        }
+    ]{loalg}
+
+    \DeclareTOCStyleEntry[
+        level=1,
+        indent=1.5em,
+        numwidth=2.3em
+    ]{default}{loalg}
+    %\newcommand\listofalgorithms{\listoftoc{loalg}}
+
+    \renewcommand*{\theequation}{%
+        \ifnum\value{chapter}=0 %
+            %
+        \else
+            \thechapter.%
+        \fi
+        \arabic{equation}%
+    }
+
+
+% Table of contents
+    \setkomafont{chapterentry}{\scshape}
+    \setcounter{tocdepth}{\sectiontocdepth}
 
 
 % Bibliography
-\usepackage[style=numeric-comp,
-                    backend=biber,
-                    backref=false,
-                    maxcitenames=3,
-                    hyperref=true,
-                    url=false,
-                    doi=false,
-                    isbn=false,
-                    date=year
-                    ]{biblatex}
-\addbibresource{biblio.bib}
+    \addbibresource{books.bib}
+    \addbibresource{articles.bib}
 
+    \setlength\bibitemsep{2\itemsep}
+    \setlength\bibhang{2em}
+    \renewcommand*{\newunitpunct}{\addcomma\space}
+    \renewcommand*{\finentrypunct}{\adddot}
+    \renewcommand*{\labelnamepunct}{\par}
+    \renewcommand*{\intitlepunct}{\space}
+    \renewcommand*{\mkbibnamefamily}[1]{\textsc{#1}}
+    \renewcommand*{\mkbibnamegiven}[1]{#1}
+    \renewcommand*{\mkbibnameprefix}[1]{{#1}}
+    \renewcommand*{\mkbibnamesuffix}[1]{{#1}}
+    \DeclareNameAlias{sortname}{family-given}
+    \DeclareFieldFormat[article,inbook,incollection,inproceedings,patent,thesis,unpublished]{title}{\emph{#1\isdot}}
+    \DeclareFieldFormat{journaltitle}{<<#1>>}
 
-% Hyperref setup
-\usepackage{hyperref}
-\hypersetup{
-    pdftitle={\myTitle},    % title
-    pdfauthor={\myName},     % author
-    colorlinks=true,       % false: boxed links (set box color with linkbordercolor)
-    breaklinks,				% allow linebreaks on links
-    linkcolor=MidnightBlue,   % color of internal links
-    citecolor=TealBlue,       % color of links to bibliography
-    urlcolor=Sepia           % color of external links
-}
-\renewcommand\UrlFont{\rmfamily}
+% References
+    \hypersetup{
+        pdftitle={\myTitle},          % title
+        pdfauthor={\myName},   % author
+        colorlinks=true,                % false: boxed links (set box color with linkbordercolor)
+        breaklinks,                        % allow linebreaks on links
+        linkcolor=MidnightBlue,  % color of internal links
+        citecolor=MidnightBlue, %TealBlue,          % color of links to bibliography
+        urlcolor=Sepia                  % color of external links
+    }
+    \renewcommand\UrlFont{\ttfamily}
 
-\usepackage[english]{cleveref}
-\newcommand{\crefrangeconjunction}{ -- }
+    \newcommand{\crefrangeconjunction}{ -- }
 
