@@ -3,6 +3,12 @@ Here is a reference to \cref{ch:second}. And here is a reference to \cref{sec:on
 
 Moreover, we can reference also \cref{thm:important} or \cref{eq:difficultmath} or even \crefrange{thm:important}{thm:corollary} or \cref{thm:important,thm:small,def:first}. \Cref{eq:difficultmath} appears at the beginning of a sentence, while we can add that \cref{sec:two-one} is at \cpageref{sec:two-one}.
 
+This is the first reference to the \gls{key}. If you need you can use make it plural: \glspl{key}. Sometimes you might want to refer to a mathematical symbol, such as \gls{sym:p}. You can also use symbols inside math equations, as seen in \eqref{eq:wavefunc}.
+
+\begin{equation}
+	\abs{\gls{sym:Psi}(x,t)}^2 = \gls{sym:Psi}^\ast(x,t) \gls{sym:Psi}(x,t) \label{eq:wavefunc}
+\end{equation}
+
 \lipsum[1-3]
 
 \section{First section}\label{sec:one-one}

@@ -1,3 +1,5 @@
+% !TeX TS-program = lualatex
+% !TeX root = thesis.tex
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %             PACKAGE LOADING
@@ -15,6 +17,7 @@
 
 % Colors
     \usepackage[usenames,dvipsnames,table]{xcolor}
+    \usepackage[a-1b]{pdfx} %export in PDF-A
 
 % Fonts
     \usepackage[no-math]{fontspec}
@@ -27,6 +30,8 @@
     \usepackage[math-style=upright,bold-style=upright]{unicode-math-luatex}
 
     \usepackage[spaceRequire=false]{algpseudocodex}
+    % Define abs environment
+    \newcommand{\abs}[1]{\left\lvert #1 \right\rvert }
 
 % Layout, graphics and tables
     \usepackage[bottom=4.5cm]{geometry}
@@ -56,12 +61,27 @@
     ]{biblatex}
 
 % Acronyms
-   \usepackage[printonlyused,smaller]{acronym}
+%   \usepackage[printonlyused,smaller]{acronym}
 
 % References
     \usepackage{hyperref}
     \usepackage[english,noabbrev]{cleveref}
 
+%GLOSSARIES
+\usepackage[nopostdot,
+nogroupskip,
+style=super,
+nonumberlist,
+automake,
+acronym,nomain,
+toc]{glossaries} %after hyperref
+\usepackage{glossary-longragged}
+
+\newglossary[slg]{symbols}{sls}{slo}{List of symbols}
+\makeglossaries
+
+\input{_Extras/acronyms}
+\loadglsentries[symbols]{_Extras/symbols}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %             MACRO DEFINITIONS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -142,13 +162,13 @@
     \AfterTOCHead{\singlespacing}
 
     \graphicspath{{_Images/}}
-    \usetikzlibrary{3d,calc}
-    %\input{tikz_utils}
+%    \usetikzlibrary{3d,calc}
+%    \input{tikz_utils}
 
     \addtokomafont{caption}{\small}
     \setkomafont{captionlabel}{\scshape}
 
-    \newcommand{\gotoclearpage}{\cleardoublepage\acresetall}
+    \newcommand{\gotoclearpage}{\cleardoublepage\glsresetall}
 
 % Headers
     \clearpairofpagestyles
@@ -210,36 +230,30 @@
 
     \RedeclareSectionCommands[
         tocraggedpagenumber,
-        toclinefill=\qquad
+        toclinefill=\TOCLineLeaderFill%,\qquad,
         ]{part}
 
     \RedeclareSectionCommands[
         tocraggedpagenumber,
-        toclinefill=\qquad,
-        afterindent=false,
-        beforeskip=3.5\baselineskip,
-        afterskip=2\baselineskip
+        toclinefill=\TOCLineLeaderFill%,\qquad,
+%        afterindent=false,
         ]{chapter}
 
     \RedeclareSectionCommands[
         tocraggedpagenumber,
-        toclinefill=\qquad,
-        afterindent=false,
-        beforeskip=1.5\baselineskip,
-        afterskip=\baselineskip
+        toclinefill=\TOCLineLeaderFill%,\qquad,
+%        afterindent=false,
         ]{section}
 
     \RedeclareSectionCommands[
         tocraggedpagenumber,
-        toclinefill=\qquad,
-        afterindent=false,
-        beforeskip=\baselineskip,
-        afterskip=0.75\baselineskip
+        toclinefill=\TOCLineLeaderFill%,\qquad,
+%        afterindent=false,
         ]{subsection}
 
     \RedeclareSectionCommands[
         tocraggedpagenumber,
-        toclinefill=\qquad
+        toclinefill=\TOCLineLeaderFill%,\qquad,
         ]{subsubsection}
 
     \DeclareNewTOC[
@@ -283,8 +297,8 @@
 
 
 % Bibliography
-    \addbibresource{books.bib}
-    \addbibresource{articles.bib}
+    \addbibresource{biblio.bib}
+%    \addbibresource{articles.bib}
 
     \setlength\bibitemsep{2\itemsep}
     \setlength\bibhang{2em}
