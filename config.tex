@@ -60,28 +60,25 @@
         date=year
     ]{biblatex}
 
-% Acronyms
-%   \usepackage[printonlyused,smaller]{acronym}
-
 % References
     \usepackage{hyperref}
     \usepackage[english,noabbrev]{cleveref}
 
-%GLOSSARIES
-\usepackage[nopostdot,
-nogroupskip,
-style=super,
-nonumberlist,
-automake,
-acronym,nomain,
-toc]{glossaries} %after hyperref
-\usepackage{glossary-longragged}
+% Glossaries
+	\usepackage[nopostdot,
+	nogroupskip,
+	style=super,
+	nonumberlist,
+	automake,
+	acronym,nomain,
+	toc]{glossaries} %after hyperref
+	\usepackage{glossary-longragged}
 
-\newglossary[slg]{symbols}{sls}{slo}{List of symbols}
-\makeglossaries
+	\newglossary[slg]{symbols}{sls}{slo}{List of symbols}
+	\makeglossaries
 
-\input{_Extras/acronyms}
-\loadglsentries[symbols]{_Extras/symbols}
+	\input{_Extras/acronyms}
+	\loadglsentries[symbols]{_Extras/symbols}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %             MACRO DEFINITIONS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -316,12 +313,12 @@ toc]{glossaries} %after hyperref
 
 % References
     \hypersetup{
-        pdftitle={\myTitle},          % title
-        pdfauthor={\myName},   % author
+        pdftitle={\myTitle},          	% title
+        pdfauthor={\myName},   			% author
         colorlinks=true,                % false: boxed links (set box color with linkbordercolor)
-        breaklinks,                        % allow linebreaks on links
-        linkcolor=MidnightBlue,  % color of internal links
-        citecolor=MidnightBlue, %TealBlue,          % color of links to bibliography
+        breaklinks,                     % allow linebreaks on links
+        linkcolor=MidnightBlue,  		% color of internal links
+        citecolor=MidnightBlue,%TealBlue, %color of links to bibliography
         urlcolor=Sepia                  % color of external links
     }
     \renewcommand\UrlFont{\ttfamily}
