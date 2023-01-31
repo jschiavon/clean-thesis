@@ -13,6 +13,20 @@
 *.fls
 *.fdb_latexmk
 
+# acronyms
+*.acn
+*.acr
+*.slg
+*.slo
+*.sls
+*.ist
+
+# Algorithms
+*.alg
+
 
 # pdf file
 *.pdf
+
+# Pdfa format
+pdfa.xmpi
