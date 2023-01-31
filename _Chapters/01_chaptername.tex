@@ -1,9 +1,9 @@
 \chapter{First chapter}
 Here is a reference to \cref{ch:second}. And here is a reference to \cref{sec:one-one} and then at \cref{sub:one-one-one}. And finally a reference to \cref{sec:two-one}.
 
-Moreover, we can reference also \cref{thm:important} or \cref{eq:difficultmath} or even \crefrange{thm:important}{thm:corollary} or \cref{thm:important,thm:small,def:first}. \Cref{eq:difficultmath} appears at the beginning of a sentence, while we can add that \cref{sec:two-one} is at \cpageref{sec:two-one}.
+Moreover, we can reference also \cref{thm:important} or \cref{eq:difficultmath} or even \crefrange{eq:difficultmath}{eq:onehalf} or \cref{thm:important,thm:small,def:first}. \Cref{eq:difficultmath} appears at the beginning of a sentence, while we can add that \cref{sec:two-one} is at \cpageref{sec:two-one}.
 
-This is the first reference to the \gls{key}. If you need you can use make it plural: \glspl{key}. Sometimes you might want to refer to a mathematical symbol, such as \gls{sym:p}. You can also use symbols inside math equations, as seen in \eqref{eq:wavefunc}.
+This is the first reference to the \gls{key}, while the subsequent calls use the shortened version \gls{key}. If you need you can use make it plural: \glspl{key}. Sometimes you might want to refer to a mathematical symbol, such as \gls{sym:p}. You can also use symbols inside math equations, as seen in \eqref{eq:wavefunc}.
 
 \begin{equation}
 	\abs{\gls{sym:Psi}(x,t)}^2 = \gls{sym:Psi}^\ast(x,t) \gls{sym:Psi}(x,t) \label{eq:wavefunc}
@@ -34,7 +34,7 @@ Moreover, here follows some example of theorems and other maths environments.
 \end{corollary}
 \begin{definition}\label{def:first}
     We define \emph{half} a number to be that number than, when doubled, returns the original number:
-    \begin{equation}
+    \begin{equation}\label{eq:onehalf}
         a = \frac{x}{2} \quad \text{iff} \quad 2a = x.
     \end{equation}
 \end{definition}
